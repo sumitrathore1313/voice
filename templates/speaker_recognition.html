@@ -66,17 +66,17 @@ body {
   </head>
 
   <body class="text-center">
-  <div class="form-signin">
+    <form class="form-signin" action="/speaker_recognition" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
       <img class="mb-4" src="http://artifiq.com/images/logo-red.png" alt="" width="72" height="72">
-      <h1 class="h4 mb-3 font-weight-normal">Please Select Option</h1>
-
-      <a href="/gender_detection"><button class="btn btn-lg btn-danger btn-block" type="submit">Start Gender Detection</button></a>
-      <a href="/language_detection"><button class="btn btn-lg btn-primary btn-block" type="submit">Start Language Detection</button></a>
-      <a href="/text"><button class="btn btn-lg btn-success btn-block" type="submit">Start Voice To Text</button></a>
-      <a href="/speaker_recognition"><button class="btn btn-lg btn-default btn-block" type="submit">Start Speaker Recognition</button></a>
+      <h1 class="h4 mb-3 font-weight-normal">Please Upload Voice file</h1>
+      <div class="custom-file" style="margin-bottom: 50px">
+          <input type="file" class="custom-file-input" name="audio_file">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+      <button class="btn btn-lg btn-danger btn-block" type="submit">Start Speaker Recognition</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-    </div>
-
+    </form>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

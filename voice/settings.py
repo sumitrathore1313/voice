@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gender_detection',
     'language_detection',
-    'text'
+    'text',
+    'speaker_recognition'
 ]
 
 MIDDLEWARE = [

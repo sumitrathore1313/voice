@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('gender_detection.urls')),
     path('', include('language_detection.urls')),
     path('', include('text.urls')),
+    path('', include('speaker_recognition.urls')),
 ]
