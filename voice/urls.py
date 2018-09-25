@@ -20,8 +20,9 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('', include('gender_detection.urls')),
-    path('', include('language_detection.urls')),
-    path('', include('text.urls')),
-    path('', include('speaker_recognition.urls')),
+    # path('', include('gender_detection.urls')),
+    # path('', include('language_detection.urls')),
+    # path('', include('text.urls')),
+    # path('', include('speaker_recognition.urls')),
+    path('', include('tv_logo.urls')),
 ]

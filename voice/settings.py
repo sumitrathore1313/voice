@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gender_detection',
-    'language_detection',
-    'text',
-    'speaker_recognition'
+    # 'gender_detection',
+    # 'language_detection',
+    # 'text',
+    # 'speaker_recognition',
+    'tv_logo',
 ]
 
 MIDDLEWARE = [
