@@ -1,11 +1,48 @@
 import os
 from time import sleep
-
+import os
+import numpy as np
 import cv2
 from google.cloud import vision
 import io
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/sumit/Documents/sumit/gcp/My First Project-9067fbfb3502.json"
+
+logo_path = "SKR/data/logo"
+logo_path =  list(map(lambda s: logo_path+"/"+s, os.listdir(logo_path)))
+
+def get4corner(image):
+    x_size, y_size, _= image.shape
+    img1 = image[:int(x_size/3), :int(y_size/3)]
+    img2 = image[int(x_size*2/3):, :int(y_size/3)]
+    img3 = image[:int(x_size/3), int(y_size*2/3):-1]
+    img4 = image[ int(x_size*2/3):, int(y_size*2/3):-1]
+    img = np.concatenate((img1, img2, img3, img4), axis=1)
+
+    return img
+
+def slide(image, logo):
+    temp = []
+    for i in range(0, len(image)-len(logo)):
+        for j in range(0, len(image[0])-len(logo[0])):
+            img = image[i:i+len(logo), j:j+len(logo[0])]
+
+            temp.append(mse(img, logo))
+            # temp.append(compare_ssim(img, logo, multichannel=True))
+
+    return np.min(temp)
+
+
+def mse(imageA, imageB):
+    # the 'Mean Squared Error' between the two images is the
+    # sum of the squared difference between the two images;
+    # NOTE: the two images must have the same dimension
+    err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
+    err /= float(imageA.shape[0] * imageA.shape[1])
+
+    # return the MSE, the lower the error, the more "similar"
+    # the two images are
+    return err
 
 def detect_text(path):
     """Detects text in the file."""
@@ -34,6 +71,18 @@ def detect_text(path):
 
         # print('bounds: {}'.format(','.join(vertices)))
 
+def detect_logo(path):
+    logos = []
+    for temp in logo_path:
+        logos.append(cv2.imread(temp))
+    img = cv2.imread(path)
+    img_corner = get4corner(img)
+    val = []
+    print(len(logos))
+    for logo in logos:
+        # compare_images(img_corner, logo)
+        val.append(slide(img_corner, logo))
+    print(val)
+    winner = np.argmin(val)
 
-# detect_text("/home/sumit/Desktop/image_mapping/SKR/data/1068/01-08-2018 12 44 04/15.jpg")
-# path = "/home/sumit/Desktop/image_mapping/SKR/data/1068/01-08-2018 12 44 04/14.jpg"
+    return logo_path[winner].split('/')[-1].split('.')[0]
